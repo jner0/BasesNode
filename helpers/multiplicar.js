@@ -1,42 +1,27 @@
 const fs = require("fs");
+const colors = require("colors");
 
-// const crearArchivo = (base = 5) => {
-//   return new Promise((resolve, reject) => {
-//     console.log("=====================");
-//     console.log("    Tabla del:", base);
-//     console.log("=====================");
-
-//     let salida = "";
-
-//     for (let i = 1; i <= 10; i++) {
-//       salida += `${base} X ${i} = ${base * i}\n`;
-//     }
-
-//     console.log(salida);
-
-//     fs.writeFileSync(`tabla-${base}.txt`, salida);
-
-//     resolve(`tabla-${base}.txt creado`);
-//   });
-// };
-
-const crearArchivo = async (base = 5) => {
+const crearArchivo = async (base = 5, listar = false, h = 10) => {
   try {
-    console.log("=====================");
-    console.log("    Tabla del:", base);
-    console.log("=====================");
-
     let salida = "";
+    let consola = "";
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= h; i++) {
       salida += `${base} X ${i} = ${base * i}\n`;
+      consola += `${colors.yellow(base)} ${"X".blue} ${colors.red(i)} ${
+        "=".green
+      } ${base * i}\n`;
+    }
+    if (listar) {
+      console.log("=====================".green);
+      console.log("    Tabla del:".rainbow, base);
+      console.log("=====================".green);
+      console.log(consola);
     }
 
-    console.log(salida);
+    fs.writeFileSync(`./salida/tabla-${base}.txt`, salida);
 
-    fs.writeFileSync(`tabla-${base}.txt`, salida);
-
-    return `tabla-${base}.txt creado`;
+    return `tabla-${base}.txt`;
   } catch (err) {
     throw err;
   }
